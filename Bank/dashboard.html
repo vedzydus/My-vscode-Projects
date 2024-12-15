@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Financial Dashboard</title>
+</head>
+<body>
+    <header>
+        <h1>Your Financial Dashboard</h1>
+    </header>
+
+    <nav>
+        <a href="index.html">Home</a>
+    </nav>
+
+    <div class="container">
+        <section>
+            <h2>Control Spending Insights</h2>
+            <ul id="spending-list" class="spends-list"></ul>
+        </section>
+
+        <section>
+            <h2>Manage Your Money Better</h2>
+            <p>Total Savings: <span id="savings"></span></p>
+        </section>
+
+        <section>
+            <h2>Track Monthly Cash Flow</h2>
+            <p>Incoming: <span id="incoming"></span></p>
+            <p>Spends: <span id="spends"></span></p>
+        </section>
+    </div>
+
+    <script>
+        // Get URL parameters and display data
+        const urlParams = new URLSearchParams(window.location.search);
+        document.getElementById("savings").textContent = `₹${urlParams.get("savings") || 0}`;
+        document.getElementById("incoming").textContent = `₹${urlParams.get("incoming") || 0}`;
+        document.getElementById("spends").textContent = `₹${urlParams.get("spends") || 0}`;
+
+        // Populate spending breakdown list
+        const spendingList = document.getElementById("spending-list");
+        const spends = [
+            { name: "Shopping", value: urlParams.get("shopping") || 0 },
+            { name: "Food & Dining", value: urlParams.get("food") || 0 },
+            { name: "Groceries", value: urlParams.get("groceries") || 0 },
+            { name: "Home Services", value: urlParams.get("home") || 0 },
+            { name: "Bills & Utilities", value: urlParams.get("bills") || 0 }
+        ];
+
+        spends.forEach(spend => {
+            const li = document.createElement("li");
+            li.textContent = `${spend.name}: ₹${spend.value}`;
+            spendingList.appendChild(li);
+        });
+    </script>
+</body>
+</html>
